@@ -1,4 +1,3 @@
-// src/main/java/com/example/demo/controller/UserController.java
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
@@ -27,5 +26,14 @@ public class UserController {
 
         userService.registerUser(user);
         return ResponseEntity.ok("Signup successful!");
+    }
+
+    @GetMapping("/login")
+    public ResponseEntity<String> login(@RequestParam String email, @RequestParam String password) {
+        User user = userService.validateLogin(email, password);
+        if (user != null) {
+            return ResponseEntity.ok("Login successful!");
+        }
+        return ResponseEntity.status(401).body("Invalid email or password.");
     }
 }
